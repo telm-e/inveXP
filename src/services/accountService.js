@@ -11,14 +11,12 @@ const depositTransaction = async (depositData) => {
     const { balance } = account[0];
     const newBalance = parseInt(balance, 10) + parseInt(amount, 10);
     const transaction = {
-        accountId: parseInt(clientId, 10),
         clientId: parseInt(clientId, 10),
         type: 2,
         pBalance: parseInt(balance, 10),
         amount: parseInt(amount, 10),
         newBalance: newBalance,
     }
-    console.log(transaction);
     await accountModel.addTransaction(transaction);
     await accountModel.updateBalance(transaction);
     return transaction;
@@ -37,7 +35,6 @@ const withdrawalTransaction = async (withdrawalData) => {
         amount: parseInt(amount, 10),
         newBalance: newBalance,
     }
-    console.log(transaction);
     await accountModel.addTransaction(transaction);
     await accountModel.updateBalance(transaction);
     return transaction;

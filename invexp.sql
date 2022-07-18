@@ -29,25 +29,25 @@ CREATE TABLE Invexp.Types (
 CREATE TABLE Invexp.AccountTransactions (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   date datetime,
-  accountId INTEGER,
+  clientId INTEGER,
   typeId INTEGER,
   previousBalance INTEGER,
   amount INTEGER,
   newBalance INTEGER,
-  FOREIGN KEY (accountId) REFERENCES Invexp.Accounts (id),
+  FOREIGN KEY (clientId) REFERENCES Invexp.Accounts (clientId),
   FOREIGN KEY (typeId) REFERENCES Invexp.Types (id)
 );
 
 CREATE TABLE Invexp.WalletTransactions (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   date datetime,
-  accountId INTEGER,
+  clientId INTEGER,
   typeId INTEGER,
   assetId INTEGER,
   previousBalance INTEGER,
   amount INTEGER,
   newBalance INTEGER,
-  FOREIGN KEY (accountId) REFERENCES Invexp.Accounts (id),
+  FOREIGN KEY (clientId) REFERENCES Invexp.Accounts (clientId),
   FOREIGN KEY (assetId) REFERENCES Invexp.Assets (id),
   FOREIGN KEY (typeId) REFERENCES Invexp.Types (id)
 );
@@ -84,7 +84,7 @@ VALUES
   (4, 20);
   
 INSERT INTO
-  Invexp.AccountTransactions (date, accountId, typeId, previousBalance, amount, newBalance)
+  Invexp.AccountTransactions (date, clientId, typeId, previousBalance, amount, newBalance)
 VALUES
   ('2022-07-03 15:34:25', 1, 1, 7300, 300, 7000),
   ('2022-07-04 10:09:56', 2, 2, 3300, 700, 4000),
@@ -93,7 +93,7 @@ VALUES
   ('2022-07-10 13:12:21', 3, 2, 9658.50, 341.50, 10000);
   
   INSERT INTO
-  Invexp.WalletTransactions (date, accountId, typeId, assetId, previousBalance, amount, newBalance)
+  Invexp.WalletTransactions (date, clientId, typeId, assetId, previousBalance, amount, newBalance)
 VALUES
   ('2022-07-07 23:21:12', 2, 1, 4, 0, 100, 100),
   ('2022-07-10 13:12:21', 3, 2, 1, 20, 5, 15);
