@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS Invexp;
 CREATE TABLE Invexp.Assets (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  price INTEGER NOT NULL,
+  price decimal(10,2) NOT NULL,
   available INTEGER NOT NULL
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE Invexp.Clients (
 CREATE TABLE Invexp.Accounts (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   clientId INTEGER,
-  balance INTEGER NOT NULL,
+  balance DECIMAL(10,2) NOT NULL,
   FOREIGN KEY (clientId) REFERENCES Invexp.Clients (id)
 );
 
@@ -31,9 +31,9 @@ CREATE TABLE Invexp.AccountTransactions (
   date datetime,
   clientId INTEGER,
   typeId INTEGER,
-  previousBalance INTEGER,
-  amount INTEGER,
-  newBalance INTEGER,
+  previousBalance DECIMAL(10,2),
+  amount DECIMAL(10,2),
+  newBalance DECIMAL(10,2),
   FOREIGN KEY (clientId) REFERENCES Invexp.Accounts (clientId),
   FOREIGN KEY (typeId) REFERENCES Invexp.Types (id)
 );
