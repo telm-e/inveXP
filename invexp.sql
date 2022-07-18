@@ -9,7 +9,7 @@ CREATE TABLE Invexp.Assets (
 );
 
 CREATE TABLE Invexp.Clients (
-  id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  id INTEGER(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   email TEXT NOT NULL,
   password TEXT NOT NULL
 );
@@ -52,6 +52,12 @@ CREATE TABLE Invexp.WalletTransactions (
   FOREIGN KEY (typeId) REFERENCES Invexp.Types (id)
 );
 
+ALTER TABLE Invexp.Clients
+AUTO_INCREMENT=10001;
+
+ALTER TABLE Invexp.Assets
+AUTO_INCREMENT=101;
+
 INSERT INTO
   Invexp.Assets (name, price, available)
 VALUES
@@ -78,22 +84,22 @@ VALUES
 INSERT INTO
   Invexp.Accounts (clientId, balance)
 VALUES
-  (1, 7000),
-  (2, 3000),
-  (3, 10000),
-  (4, 20);
+  (10001, 7000),
+  (10002, 3000),
+  (10003, 10000),
+  (10004, 20);
   
 INSERT INTO
   Invexp.AccountTransactions (date, clientId, typeId, previousBalance, amount, newBalance)
 VALUES
-  ('2022-07-03 15:34:25', 1, 1, 7300, 300, 7000),
-  ('2022-07-04 10:09:56', 2, 2, 3300, 700, 4000),
-  ('2022-07-04 11:43:52', 4, 1, 5200, 500, 20),
-  ('2022-07-07 23:21:12', 2, 1, 4003, 1003, 3000),
-  ('2022-07-10 13:12:21', 3, 2, 9658.50, 341.50, 10000);
+  ('2022-07-03 15:34:25', 10001, 1, 7300, 300, 7000),
+  ('2022-07-04 10:09:56', 10002, 2, 3300, 700, 4000),
+  ('2022-07-04 11:43:52', 10004, 1, 5200, 500, 20),
+  ('2022-07-07 23:21:12', 10002, 1, 4003, 1003, 3000),
+  ('2022-07-10 13:12:21', 10003, 2, 9658.50, 341.50, 10000);
   
   INSERT INTO
   Invexp.WalletTransactions (date, clientId, typeId, assetId, previousBalance, amount, newBalance)
 VALUES
-  ('2022-07-07 23:21:12', 2, 1, 4, 0, 100, 100),
-  ('2022-07-10 13:12:21', 3, 2, 1, 20, 5, 15);
+  ('2022-07-07 23:21:12', 10002, 1, 104, 0, 100, 100),
+  ('2022-07-10 13:12:21', 10003, 2, 101, 20, 5, 15);

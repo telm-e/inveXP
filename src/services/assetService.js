@@ -1,7 +1,7 @@
 const assetModel = require('../models/assetModel');
 
 const getById = (id) => {
-    const getAssetById = assetModel.findById(id);
+    const getAssetById = assetModel.findAssetById(id);
     return getAssetById;
 };
 
