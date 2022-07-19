@@ -21,6 +21,15 @@ CREATE TABLE Invexp.Accounts (
   FOREIGN KEY (clientId) REFERENCES Invexp.Clients (id)
 );
 
+CREATE TABLE Invexp.Wallets (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  clientId INTEGER NOT NULL,
+  assetId INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
+  FOREIGN KEY (clientId) REFERENCES Invexp.Clients (id),
+  FOREIGN KEY (assetId) REFERENCES Invexp.Assets (id)
+);
+
 CREATE TABLE Invexp.Types (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   description TEXT NOT NULL
@@ -88,6 +97,12 @@ VALUES
   (10002, 3000),
   (10003, 10000),
   (10004, 20);
+  
+  INSERT INTO
+  Invexp.Wallets (clientId, assetId, quantity)
+VALUES
+  (10002, 104, 100),
+  (10003, 101, 15);
   
 INSERT INTO
   Invexp.AccountTransactions (date, clientId, typeId, previousBalance, amount, newBalance)
