@@ -84,6 +84,7 @@ const purchaseTransaction = async (purchaseData) => {
 module.exports = {
     getPreviousQuantity,
     getAssetById,
+    getAccountById,
     saleTransaction,
     purchaseTransaction,
 }
