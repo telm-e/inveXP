@@ -10,10 +10,6 @@ const getById = async (req, res) => {
   };
 
 const depositTransaction = async (req, res) => {
-    const { clientId, amount } = req.body;
-    if (amount <= 0) {
-      return res.status(404).json({ message: 'Amount invalid' });
-    }
     const deposit = await accountService.depositTransaction(req.body);
     return res.status(200).json(deposit);
 }
