@@ -2,8 +2,7 @@ const walletService = require('../services/walletService');
 
 const saleTransaction = async (req, res) => {
     const { clientId, assetId, amount } = req.body;
-    const [getClientById] = await walletService.getClientById(clientId, assetId);
-    const { quantity } = getClientById[0];
+    const quantity = await walletService.getPreviousQuantity(clientId, assetId);
     if ( amount > quantity) {
       return res.status(404).json({ message: 'Amount invalid' });
     }
@@ -13,8 +12,8 @@ const saleTransaction = async (req, res) => {
 
 const purchaseTransaction = async (req, res) => {
     const { clientId, assetId, amount } = req.body;
-    const [getAssetById] = await walletService.getAssetById(assetId);
-    const { available } = getAssetById[0];
+    const getAssetById = await walletService.getAssetById(assetId);
+    const { available } = getAssetById;
     if (amount > available) {
       return res.status(404).json({ message: 'Amount invalid' });
     }
