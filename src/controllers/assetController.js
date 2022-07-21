@@ -6,7 +6,10 @@ const getById = async (req, res) => {
     if (getById.length === 0) {
       return res.status(404).json({ message: 'ID not found' });
     }
-    res.status(200).json(getById[0]);
+    if (id < 10000) {
+      return res.status(200).json(getById[0]);
+    }
+    res.status(200).json(getById);
   };
 
   module.exports = {
