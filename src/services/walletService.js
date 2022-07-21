@@ -24,12 +24,13 @@ const saleTransaction = async (saleData) => {
     const { clientId, assetId, amount } = saleData;
     const pQuantity = await getPreviousQuantity(clientId, assetId);
     const newQuantity = parseInt(pQuantity, 10) - parseInt(amount, 10);
-    const { price } = await getAssetById(assetId);
+    const { price, available } = await getAssetById(assetId);
     const { balance: pBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
         type: 2,
         assetId,
+        nowAvailable: parseInt(available, 10) + parseInt(amount, 10),
         price,
         pQuantity: parseInt(pQuantity, 10),
         amount: parseInt(amount, 10),
@@ -44,6 +45,7 @@ const saleTransaction = async (saleData) => {
     await walletModel.addTransaction(transaction);
     await walletModel.updateWallet(transaction);
     await walletModel.updateAccount(transaction);
+    await walletModel.updateAssets(transaction);
     return transaction;
 }
 
@@ -51,12 +53,13 @@ const purchaseTransaction = async (purchaseData) => {
     const { clientId, assetId, amount } = purchaseData;
     const pQuantity = await getPreviousQuantity(clientId, assetId);
     const newQuantity = parseInt(pQuantity, 10) + parseInt(amount, 10);
-    const { price } = await getAssetById(assetId);
+    const { price, available } = await getAssetById(assetId);
     const { balance: pBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
         type: 1,
         assetId,
+        nowAvailable: parseInt(available, 10) - parseInt(amount, 10),
         price,
         pQuantity: parseInt(pQuantity, 10),
         amount: parseInt(amount, 10),
@@ -69,6 +72,7 @@ const purchaseTransaction = async (purchaseData) => {
     }
     await walletModel.addTransaction(transaction);
     await walletModel.updateAccount(transaction);
+    await walletModel.updateAssets(transaction);
     if (pQuantity === 0) {
         await walletModel.newWallet(transaction);
     } else {

@@ -31,10 +31,16 @@ const updateWallet = async (transaction) => {
     await connection.execute(query, [newQuantity, clientId, assetId]);
   };
 
-  const updateAccount = async (transaction) => {
-    const { account, clientId } = transaction;
-    const query = 'UPDATE Invexp.Accounts SET balance = ? WHERE clientId = ?;';
-    await connection.execute(query, [account.newBalance, clientId]);
+const updateAccount = async (transaction) => {
+  const { account, clientId } = transaction;
+  const query = 'UPDATE Invexp.Accounts SET balance = ? WHERE clientId = ?;';
+  await connection.execute(query, [account.newBalance, clientId]);
+};
+
+const updateAssets = async (transaction) => {
+    const { assetId, nowAvailable } = transaction;
+    const query = 'UPDATE Invexp.Assets SET available = ? WHERE id = ?;';
+    await connection.execute(query, [nowAvailable, assetId]);
   };
 
   module.exports = {
@@ -45,4 +51,5 @@ const updateWallet = async (transaction) => {
     newWallet,
     updateWallet,
     updateAccount,
+    updateAssets,
 }
