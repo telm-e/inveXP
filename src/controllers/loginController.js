@@ -8,11 +8,15 @@ const jwtConfig = {
     algorithm: 'HS256',
   };
 
-const getClient = async (req, res) => {
+const getClient = async (req, res, next) => {
+  try {
     const client = await clientService.getClient(req.body);
     const { id, email } = client[0];
     const token = jwt.sign({ id, email }, secret, jwtConfig);
     res.status(200).json({ token });
+  } catch(err) {
+    next(err);
+  }
   };
 
   module.exports = {

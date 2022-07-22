@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const errorMiddleware = require('./src/middlewares/errorMiddleware');
 
 
 const PORT = 3000;
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(require('./src/routes'));
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);

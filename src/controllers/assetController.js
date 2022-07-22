@@ -1,7 +1,16 @@
 const assetService = require('../services/assetService');
-const tokenValidation = require('../middlewares/tokenValidation');
+
+const listAssets = async (req, res, next) => {
+  try {
+    const list = await assetService.listAssets();
+    return res.status(200).json(list);
+  } catch(err) {
+    next(err);
+  }
+}
 
 const getById = async (req, res, next) => {
+  try {
     const { id } = req.params;
     const [getById] = await assetService.getById(id);
     if (getById.length === 0) {
@@ -12,8 +21,12 @@ const getById = async (req, res, next) => {
     }
     // clientId case
     res.status(200).json(getById);
+  } catch(err) {
+    next(err);
+  }
   };
 
   module.exports = {
+    listAssets,
     getById,
 }

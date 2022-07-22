@@ -8,6 +8,4 @@ routes.use('/account', tokenValidation, require('./accountRoute'));
 routes.use('/asset', tokenValidation, require('./assetRoute'));
 routes.use('/wallet', tokenValidation, require('./walletRoute'));
 
-// routes.use(middlewares.error);
-
 module.exports = routes;
