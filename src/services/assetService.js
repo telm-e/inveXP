@@ -1,5 +1,9 @@
 const assetModel = require('../models/assetModel');
 
+const listAssets = async () => {
+  const [list] = await assetModel.listAssets();
+  return list;
+}
 const getById = (id) => {
     if (id < 10000) {
       const getAssetById = assetModel.findAssetById(id);
@@ -10,5 +14,6 @@ const getById = (id) => {
 };
 
 module.exports = {
-    getById,
+  listAssets,
+  getById,
 }
