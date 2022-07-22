@@ -10,7 +10,7 @@ const getById = async (req, res, next) => {
     if (id < 10000) { // assetId case
       return res.status(200).json(getById[0]);
     }
-    tokenValidation(req, res, next); // clientId case
+    // clientId case
     res.status(200).json(getById);
   };
 
