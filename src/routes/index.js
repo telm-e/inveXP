@@ -248,12 +248,26 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               type: object
  *               $ref: '#/components/schemas/Client'
  *       responses:
- *         200:
+ *         201:
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
  *                 $ref: '#/components/schemas/Auth'
+ *         400:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Some required fields are missing
+ *         422:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Invalid password
  */
 
 /**
@@ -283,6 +297,13 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               schema:
  *                 type: object
  *                 $ref: '#/components/schemas/Account'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: account not found
  */
 /**
  * @swagger
@@ -300,12 +321,26 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               type: object
  *               $ref: '#/components/schemas/AccountTransData'
  *       responses:
- *         200:
+ *         201:
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
  *                 $ref: '#/components/schemas/DepositTransaction'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: account not found
+ *         422:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: amount invalid
  */
 /**
  * @swagger
@@ -323,12 +358,26 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               type: object
  *               $ref: '#/components/schemas/AccountTransData'
  *       responses:
- *         200:
+ *         201:
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
  *                 $ref: '#/components/schemas/WithdrawalTransaction'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: account not found
+ *         422:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: amount invalid
  */
 
 /**
@@ -373,6 +422,13 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               schema:
  *                 type: array
  *                 $ref: '#/components/schemas/Wallet'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: ID not found
  */
 
 /**
@@ -395,6 +451,13 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               schema:
  *                 type: array
  *                 $ref: '#/components/schemas/Asset'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: ID not found
  */
 /**
  * @swagger
@@ -418,12 +481,26 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               type: object
  *               $ref: '#/components/schemas/WalletTransData'
  *       responses:
- *         200:
+ *         201:
  *           content:
  *             application/json:
  *               schema:
  *                 type: array
  *                 $ref: '#/components/schemas/SaleTransaction'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Asset not found in this wallet
+ *         422:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Invalid amount
  */
 
 /**
@@ -442,12 +519,26 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *               type: object
  *               $ref: '#/components/schemas/WalletTransData'
  *       responses:
- *         200:
+ *         201:
  *           content:
  *             application/json:
  *               schema:
  *                 type: array
  *                 $ref: '#/components/schemas/PurchaseTransaction'
+ *         404:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Client ID not found
+ *         422:
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   message: Invalid amount
  */
 
 module.exports = routes;

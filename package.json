@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "eslint": "^8.20.0",
+    "http-status-codes": "^2.2.0",
     "nodemon": "^2.0.19"
   }
 }

@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const clientService = require('../services/clientService');
 
@@ -13,7 +14,7 @@ const getClient = async (req, res, next) => {
     const client = await clientService.getClient(req.body);
     const { id, email } = client[0];
     const token = jwt.sign({ id, email }, secret, jwtConfig);
-    res.status(200).json({ token });
+    res.status(StatusCodes.CREATED).json({ token });
   } catch(err) {
     next(err);
   }
