@@ -87,8 +87,10 @@ VALUES
 INSERT INTO
   Invexp.Types (description)
 VALUES
-  ("Débito/Compra"),
-  ("Crédito/Venda");
+  ("withdrawal"),
+  ("Deposit"),
+  ("Sale"),
+  ("Purchase");
 
 INSERT INTO
   Invexp.Accounts (clientId, balance)
