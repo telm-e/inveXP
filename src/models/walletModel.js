@@ -14,7 +14,7 @@ const findAccountById = async (clientId) => await connection.execute(
 
 const addTransaction = async (transaction) => {
     const { clientId, type, asset: { assetId }, prevQnt, quantity, newQnt } = transaction;
-    const query = 'INSERT INTO Invexp.WalletTransactions(date, clientId, typeId, assetId, previousBalance, amount, newBalance) VALUES (NOW(), ?, ?, ?, ?, ?, ?);'
+    const query = 'INSERT INTO Invexp.WalletTransactions(date, clientId, typeId, assetId, prevQnt, quantity, newQnt) VALUES (NOW(), ?, ?, ?, ?, ?, ?);'
     const newTransaction = await connection.execute(query, [clientId, type, assetId, prevQnt, quantity, newQnt]);
     return newTransaction;
 }

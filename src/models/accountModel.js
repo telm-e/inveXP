@@ -5,9 +5,9 @@ const findById = async (id) => await connection.execute(
 );
 
 const addTransaction = async (transaction) => {
-    const { clientId, type, pBalance, amount, newBalance } = transaction;
-    const query = 'INSERT INTO Invexp.AccountTransactions(date, clientId, typeId, previousBalance, amount, newBalance) VALUES (NOW(), ?, ?, ?, ?, ?);'
-    const newTransaction = await connection.execute(query, [clientId, type, pBalance, amount, newBalance]);
+    const { clientId, type, prevBalance, amount, newBalance } = transaction;
+    const query = 'INSERT INTO Invexp.AccountTransactions(date, clientId, typeId, prevBalance, amount, newBalance) VALUES (NOW(), ?, ?, ?, ?, ?);'
+    const newTransaction = await connection.execute(query, [clientId, type, prevBalance, amount, newBalance]);
     return newTransaction;
 }
 

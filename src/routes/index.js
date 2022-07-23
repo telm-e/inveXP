@@ -52,7 +52,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *        example:
  *          email: donnaharaway@fake.com
  *          password: cyborg
- *      AccountDeposit:
+ *      AccountTransData:
  *        type: object
  *        required:
  *          - clientId
@@ -65,7 +65,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *        example:
  *          clientId: 10003
  *          amount: 100.00
- *      AccountTransaction:
+ *      DepositTransaction:
  *        type: object
  *        required:
  *          - clientId
@@ -87,6 +87,28 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *          prevBalance: 800.00
  *          amount: 100.00
  *          newBalance: 900.00
+ *      WithdrawalTransaction:
+ *        type: object
+ *        required:
+ *          - clientId
+ *          - amount
+ *        properties:
+ *          clientId:
+ *            type: integer
+ *          type:
+ *            type: integer
+ *          prevBalance:
+ *            type: decimal
+ *          amount:
+ *            type: decimal
+ *          newBalance:
+ *            type: decimal
+ *        example:
+ *          clientId: 10003
+ *          type: 1
+ *          prevBalance: 800.00
+ *          amount: 100.00
+ *          newBalance: 700.00
  *      Wallet:
  *        type: object
  *        required:
@@ -125,7 +147,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *          name: ITUB
  *          price: 22.38
  *          available: 698
- *      SaleData:
+ *      WalletTransData:
  *        type: object
  *        required:
  *          - clientId
@@ -142,7 +164,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *          clientId: 10003
  *          assetId: 104
  *          amount: 1
- *      WalletTransaction:
+ *      PurchaseTransaction:
  *        type: object
  *        required:
  *          - clientId
@@ -161,7 +183,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *            type: integer
  *        example:
  *          clientId: 10003
- *          type: 1
+ *          type: 4
  *          asset:
  *            assetId: 104
  *            nowAvailable: 685
@@ -173,6 +195,37 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *            prevBalance: 10200
  *            totalTransaction: 10.03
  *            newBalance: 10198.97
+ *      SaleTransaction:
+ *        type: object
+ *        required:
+ *          - clientId
+ *          - type
+ *          - asset
+ *          - prevQnt
+ *          - quantity
+ *          - newQnt
+ *          - account
+ *        properties:
+ *          clientId:
+ *            type: interger
+ *          assetId:
+ *            type: integer
+ *          amount:
+ *            type: integer
+ *        example:
+ *          clientId: 10003
+ *          type: 3
+ *          asset:
+ *            assetId: 103
+ *            nowAvailable: 698
+ *            price: 22.38
+ *          prevQnt: 1
+ *          quantity: 1
+ *          newQnt: 0
+ *          account:
+ *            prevBalance: 9977
+ *            totalTransaction: 22.38
+ *            newBalance: 9999.38
  */
 
 /**
@@ -245,14 +298,14 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/AccountDeposit'
+ *               $ref: '#/components/schemas/AccountTransData'
  *       responses:
  *         200:
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
- *                 $ref: '#/components/schemas/AccountTransaction'
+ *                 $ref: '#/components/schemas/DepositTransaction'
  */
 /**
  * @swagger
@@ -268,14 +321,14 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/AccountDeposit'
+ *               $ref: '#/components/schemas/AccountTransData'
  *       responses:
  *         200:
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
- *                 $ref: '#/components/schemas/AccountTransaction'
+ *                 $ref: '#/components/schemas/WithdrawalTransaction'
  */
 
 /**
@@ -363,14 +416,14 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/SaleData'
+ *               $ref: '#/components/schemas/WalletTransData'
  *       responses:
  *         200:
  *           content:
  *             application/json:
  *               schema:
  *                 type: array
- *                 $ref: '#/components/schemas/WalletTransaction'
+ *                 $ref: '#/components/schemas/SaleTransaction'
  */
 
 /**
@@ -387,14 +440,14 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/SaleData'
+ *               $ref: '#/components/schemas/WalletTransData'
  *       responses:
  *         200:
  *           content:
  *             application/json:
  *               schema:
  *                 type: array
- *                 $ref: '#/components/schemas/WalletTransaction'
+ *                 $ref: '#/components/schemas/PurchaseTransaction'
  */
 
 module.exports = routes;

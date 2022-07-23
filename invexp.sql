@@ -40,7 +40,7 @@ CREATE TABLE Invexp.AccountTransactions (
   date datetime,
   clientId INTEGER,
   typeId INTEGER,
-  previousBalance DECIMAL(10,2),
+  prevBalance DECIMAL(10,2),
   amount DECIMAL(10,2),
   newBalance DECIMAL(10,2),
   FOREIGN KEY (clientId) REFERENCES Invexp.Accounts (clientId),
@@ -53,9 +53,9 @@ CREATE TABLE Invexp.WalletTransactions (
   clientId INTEGER,
   typeId INTEGER,
   assetId INTEGER,
-  previousBalance INTEGER,
-  amount INTEGER,
-  newBalance INTEGER,
+  prevQnt INTEGER,
+  quantity INTEGER,
+  newQnt INTEGER,
   FOREIGN KEY (clientId) REFERENCES Invexp.Accounts (clientId),
   FOREIGN KEY (assetId) REFERENCES Invexp.Assets (id),
   FOREIGN KEY (typeId) REFERENCES Invexp.Types (id)
@@ -107,7 +107,7 @@ VALUES
   (10003, 101, 15);
   
 INSERT INTO
-  Invexp.AccountTransactions (date, clientId, typeId, previousBalance, amount, newBalance)
+  Invexp.AccountTransactions (date, clientId, typeId, prevBalance, amount, newBalance)
 VALUES
   ('2022-07-03 15:34:25', 10001, 1, 7300, 300, 7000),
   ('2022-07-04 10:09:56', 10002, 2, 3300, 700, 4000),
@@ -116,7 +116,7 @@ VALUES
   ('2022-07-10 13:12:21', 10003, 2, 9658.50, 341.50, 10000);
   
   INSERT INTO
-  Invexp.WalletTransactions (date, clientId, typeId, assetId, previousBalance, amount, newBalance)
+  Invexp.WalletTransactions (date, clientId, typeId, assetId, prevQnt, quantity, newQnt)
 VALUES
-  ('2022-07-07 23:21:12', 10002, 1, 104, 0, 100, 100),
-  ('2022-07-10 13:12:21', 10003, 2, 101, 20, 5, 15);
+  ('2022-07-07 23:21:12', 10002, 4, 104, 0, 100, 100),
+  ('2022-07-10 13:12:21', 10003, 3, 101, 20, 5, 15);

@@ -27,7 +27,7 @@ const saleTransaction = async (saleData) => {
     const { balance: prevBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
-        type: 2,
+        type: 3,
         asset: {
             assetId,
             nowAvailable: parseInt(available, 10) + parseInt(amount, 10),
@@ -57,7 +57,7 @@ const purchaseTransaction = async (purchaseData) => {
     const { balance: prevBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
-        type: 1,
+        type: 4,
         asset: {
             assetId,
             nowAvailable: parseInt(available, 10) - parseInt(amount, 10),
