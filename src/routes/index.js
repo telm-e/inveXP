@@ -162,7 +162,7 @@ routes.use('/wallet', tokenValidation, require('./walletRoute'));
  *            type: integer
  *        example:
  *          clientId: 10003
- *          assetId: 104
+ *          assetId: 101
  *          amount: 1
  *      PurchaseTransaction:
  *        type: object

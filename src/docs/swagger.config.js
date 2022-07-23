@@ -2,8 +2,8 @@ const swaggerConfig = {
   definition: {
     openapi: "3.0.1",
     info: {
-      title: "API inveXP",
-      description: "API de investimentos e conta corrente"
+      title: "inveXP API",
+      description: "inveXP: uma API de investimentos e conta corrente"
     },
     servers: [{
       url: "http://localhost:3000",
