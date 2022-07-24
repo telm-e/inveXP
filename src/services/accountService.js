@@ -13,7 +13,7 @@ const depositTransaction = async (depositData) => {
     const transaction = {
         clientId: parseInt(clientId, 10),
         type: 2,
-        pBalance: parseInt(balance, 10),
+        prevBalance: parseInt(balance, 10),
         amount: parseInt(amount, 10),
         newBalance: newBalance,
     }
@@ -28,10 +28,9 @@ const withdrawalTransaction = async (withdrawalData) => {
     const { balance } = account[0];
     const newBalance = parseInt(balance, 10) - parseInt(amount, 10);
     const transaction = {
-        accountId: parseInt(clientId, 10),
         clientId: parseInt(clientId, 10),
         type: 1,
-        pBalance: parseInt(balance, 10),
+        prevBalance: parseInt(balance, 10),
         amount: parseInt(amount, 10),
         newBalance: newBalance,
     }

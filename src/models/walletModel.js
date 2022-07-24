@@ -13,22 +13,22 @@ const findAccountById = async (clientId) => await connection.execute(
 );
 
 const addTransaction = async (transaction) => {
-    const { clientId, type, assetId, pQuantity, amount, newQuantity } = transaction;
-    const query = 'INSERT INTO Invexp.WalletTransactions(date, clientId, typeId, assetId, previousBalance, amount, newBalance) VALUES (NOW(), ?, ?, ?, ?, ?, ?);'
-    const newTransaction = await connection.execute(query, [clientId, type, assetId, pQuantity, amount, newQuantity]);
+    const { clientId, type, asset: { assetId }, prevQnt, quantity, newQnt } = transaction;
+    const query = 'INSERT INTO Invexp.WalletTransactions(date, clientId, typeId, assetId, prevQnt, quantity, newQnt) VALUES (NOW(), ?, ?, ?, ?, ?, ?);'
+    const newTransaction = await connection.execute(query, [clientId, type, assetId, prevQnt, quantity, newQnt]);
     return newTransaction;
 }
 
 const newWallet = async (transaction) => {
-    const { clientId, assetId, amount } = transaction;
+    const { clientId, asset: { assetId }, quantity } = transaction;
     const query = 'INSERT INTO Invexp.Wallets(clientId, assetId, quantity) VALUES (?, ?, ?);';
-    await connection.execute(query, [clientId, assetId, amount]);
+    await connection.execute(query, [clientId, assetId, quantity]);
 }
 
 const updateWallet = async (transaction) => {
-    const { newQuantity, clientId, assetId } = transaction;
+    const { newQnt, clientId, asset: { assetId } } = transaction;
     const query = 'UPDATE Invexp.Wallets SET quantity = ? WHERE clientId = ? && assetId = ?;';
-    await connection.execute(query, [newQuantity, clientId, assetId]);
+    await connection.execute(query, [newQnt, clientId, assetId]);
   };
 
 const updateAccount = async (transaction) => {
@@ -38,7 +38,7 @@ const updateAccount = async (transaction) => {
 };
 
 const updateAssets = async (transaction) => {
-    const { assetId, nowAvailable } = transaction;
+    const { asset: { assetId, nowAvailable } } = transaction;
     const query = 'UPDATE Invexp.Assets SET available = ? WHERE id = ?;';
     await connection.execute(query, [nowAvailable, assetId]);
   };

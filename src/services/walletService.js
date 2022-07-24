@@ -1,4 +1,3 @@
-const { getAllJSDocTagsOfKind } = require('typescript');
 const walletModel = require('../models/walletModel');
 
 const getPreviousQuantity = async (clientId, assetId) => {
@@ -22,26 +21,27 @@ const getAccountById = async (clientId) => {
 
 const saleTransaction = async (saleData) => {
     const { clientId, assetId, amount } = saleData;
-    const pQuantity = await getPreviousQuantity(clientId, assetId);
-    const newQuantity = parseInt(pQuantity, 10) - parseInt(amount, 10);
+    const prevQnt = await getPreviousQuantity(clientId, assetId);
+    const newQnt = parseInt(prevQnt, 10) - parseInt(amount, 10);
     const { price, available } = await getAssetById(assetId);
-    const { balance: pBalance } = await getAccountById(clientId);
+    const { balance: prevBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
-        type: 2,
-        assetId,
-        nowAvailable: parseInt(available, 10) + parseInt(amount, 10),
-        price,
-        pQuantity: parseInt(pQuantity, 10),
-        amount: parseInt(amount, 10),
-        newQuantity,
+        type: 3,
+        asset: {
+            assetId,
+            nowAvailable: parseInt(available, 10) + parseInt(amount, 10),
+            price,
+        },
+        prevQnt: parseInt(prevQnt, 10),
+        quantity: parseInt(amount, 10),
+        newQnt,
         account: {
-          pBalance: parseInt(pBalance, 10),
+          prevBalance: parseInt(prevBalance, 10),
           totalTransaction: price * amount,
-          newBalance: parseInt(pBalance, 10) + (price * amount),
+          newBalance: parseInt(prevBalance, 10) + (price * amount),
         }
     }
-    console.log(transaction);
     await walletModel.addTransaction(transaction);
     await walletModel.updateWallet(transaction);
     await walletModel.updateAccount(transaction);
@@ -51,29 +51,31 @@ const saleTransaction = async (saleData) => {
 
 const purchaseTransaction = async (purchaseData) => {
     const { clientId, assetId, amount } = purchaseData;
-    const pQuantity = await getPreviousQuantity(clientId, assetId);
-    const newQuantity = parseInt(pQuantity, 10) + parseInt(amount, 10);
+    const prevQnt = await getPreviousQuantity(clientId, assetId);
+    const newQnt = parseInt(prevQnt, 10) + parseInt(amount, 10);
     const { price, available } = await getAssetById(assetId);
-    const { balance: pBalance } = await getAccountById(clientId);
+    const { balance: prevBalance } = await getAccountById(clientId);
     const transaction = {
         clientId: parseInt(clientId, 10),
-        type: 1,
-        assetId,
-        nowAvailable: parseInt(available, 10) - parseInt(amount, 10),
-        price,
-        pQuantity: parseInt(pQuantity, 10),
-        amount: parseInt(amount, 10),
-        newQuantity,
+        type: 4,
+        asset: {
+            assetId,
+            nowAvailable: parseInt(available, 10) - parseInt(amount, 10),
+            price,
+        },
+        prevQnt: parseInt(prevQnt, 10),
+        quantity: parseInt(amount, 10),
+        newQnt,
         account: {
-          pBalance: parseInt(pBalance, 10),
+          prevBalance: parseInt(prevBalance, 10),
           totalTransaction: price * amount,
-          newBalance: parseInt(pBalance, 10) - (price * amount),
+          newBalance: parseInt(prevBalance, 10) - (price * amount),
         }
     }
     await walletModel.addTransaction(transaction);
     await walletModel.updateAccount(transaction);
     await walletModel.updateAssets(transaction);
-    if (pQuantity === 0) {
+    if (prevQnt === 0) {
         await walletModel.newWallet(transaction);
     } else {
         await walletModel.updateWallet(transaction);
