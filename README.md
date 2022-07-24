@@ -74,5 +74,6 @@ para acompanhar o desenvolvimento desta API você pode:
 > JWT_SECRET=suasenhasecreta <br />
 4) Colocar o aplicativo para rodar. Para isso, utilize `npm run dev` . O aplicativo está configurado para rodar na porta 3000.
 5) Após rodar a aplicação no servidor local, acompanhe as ações possíveis a partir da lista de endpoints na documentação do swagger: http://localhost:3000/docs
+6) Para rodar os endpoints protegidos por verificação de token, solicite um token utilizando o endpoint /login. Copie e cole apenas a hash no campo "authorize" do swagger.
 
   <br />
